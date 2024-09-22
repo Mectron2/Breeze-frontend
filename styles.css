@@ -1,0 +1,54 @@
+body {
+    background-color: lightgreen;
+}
+
+.main {
+    display: flex;
+    gap: 1vw;
+    height: 100vh;
+}
+
+.column {
+    flex: 1;
+    border-radius: 25px;
+    height: 100vh;
+}
+
+.box {
+    border-radius: 24.2px;
+    flex: 1; /* Заполняет доступное пространство */
+    margin: 10px; /* Отступы вокруг элементов */
+    box-sizing: border-box; /* Учитывает padding и border в общую высоту и ширину */
+}
+
+#first {
+    background-color: violet;
+}
+
+#second {
+    background-color: red;
+}
+
+#lyrics_container {
+    display: flex;
+    background-color: lightblue;
+    flex-direction: column;
+    flex: 1;
+}
+
+#main_container {
+    display: flex;
+    flex-direction: column;
+    background-color: lightcoral;
+}
+
+#lyrics {
+    flex: 1;
+    padding: 10px; /* Отступы вокруг текста */
+    background-color: lightgoldenrodyellow;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+

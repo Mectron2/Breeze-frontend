@@ -6,19 +6,43 @@ import './AddPost.css';
 
 const AddPost = () => {
     const [title, setTitle] = useState('');
-    const [imagePath, setImagePath] = useState('');
-    const [content, setContent] = useState('');
+    const [imageFile, setImageFile] = useState(null); // Состояние для файла
     const [contentType, setContentType] = useState('TEXT');
+    const [content, setContent] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const updatedContentType = imagePath ? 'IMAGE' : 'TEXT';
+        const updatedContentType = imageFile ? 'IMAGE' : 'TEXT';
+
+        let uploadedImagePath = ''; // Путь к загруженному изображению
+
+        // Если файл выбран, загрузим его
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('file', imageFile); // Добавляем файл в FormData
+
+            try {
+                const response = await apiClient.post('/files/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Указываем, что это форма с файлом
+                    },
+                });
+
+                if (response.status === 200 || response.status === 201) {
+                    uploadedImagePath = response.data; // Путь к загруженному файлу
+                }
+            } catch (error) {
+                setResponseMessage('Error while uploading file.');
+                console.error('Error uploading file:', error);
+                return; // Выход из функции, если файл не удалось загрузить
+            }
+        }
 
         const postData = {
             title: title,
-            imagePath: imagePath,
+            imagePath: `http://localhost:8080${uploadedImagePath}`, // Используем путь загруженного файла
             content: content,
             contentType: updatedContentType, // Используем обновленный contentType
         };
@@ -30,7 +54,7 @@ const AddPost = () => {
                 setResponseMessage('Post successfully added!');
                 console.log('Server response:', response.data);
                 setTitle('');
-                setImagePath('');
+                setImageFile(null); // Сбрасываем файл
                 setContent('');
                 setContentType('TEXT');
             } else {
@@ -83,13 +107,13 @@ const AddPost = () => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="imagePath" className="form-label">Image Path:</label>
+                                    <label htmlFor="imageFile" className="form-label">Image:</label>
                                     <input
-                                        type="text"
-                                        id="imagePath"
-                                        className="form-control"
-                                        value={imagePath}
-                                        onChange={(e) => setImagePath(e.target.value)}
+                                        type="file"
+                                        id="imageFile"
+                                        name="imageFile"
+                                        accept="image/png, image/jpeg"
+                                        onChange={(e) => setImageFile(e.target.files[0])} // Устанавливаем выбранный файл
                                     />
                                 </div>
                                 <div className="mb-3">

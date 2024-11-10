@@ -33,5 +33,5 @@ export const isAuthenticated = () => {
 export const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     delete apiClient.defaults.headers.common['Authorization'];
-    window.location.reload(); // Перезагрузка для очистки состояния приложения (опционально)
+    // Убираем перезагрузку страницы
 };

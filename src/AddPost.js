@@ -14,11 +14,13 @@ const AddPost = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const updatedContentType = imagePath ? 'IMAGE' : 'TEXT';
+
         const postData = {
             title: title,
             imagePath: imagePath,
             content: content,
-            contentType: contentType,
+            contentType: updatedContentType, // Используем обновленный contentType
         };
 
         try {
@@ -44,14 +46,13 @@ const AddPost = () => {
     return (
         <div>
             {/* Кнопка для открытия модального окна */}
-            <button
+            <i
                 type="button"
-                className="btn btn-primary"
+                className="bi bi-plus-square-fill fs-4"
                 data-bs-toggle="modal"
                 data-bs-target="#addPostModal"
             >
-                +
-            </button>
+            </i>
 
             {/* Модальное окно */}
             <div
@@ -65,7 +66,8 @@ const AddPost = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="addPostModalLabel">Add New Post</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form onSubmit={handleSubmit}>
@@ -99,19 +101,6 @@ const AddPost = () => {
                                         onChange={(e) => setContent(e.target.value)}
                                         required
                                     ></textarea>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="contentType" className="form-label">Content Type:</label>
-                                    <select
-                                        id="contentType"
-                                        className="form-select"
-                                        value={contentType}
-                                        onChange={(e) => setContentType(e.target.value)}
-                                    >
-                                        <option value="TEXT">TEXT</option>
-                                        <option value="IMAGE">IMAGE</option>
-                                        <option value="VIDEO">VIDEO</option>
-                                    </select>
                                 </div>
                                 <button type="submit" className="btn btn-success">Add Post</button>
                             </form>

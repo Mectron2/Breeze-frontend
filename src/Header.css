@@ -1,0 +1,52 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 7vw; /* Ширина вертикального блока */
+    height: 100vh; /* Высота на весь экран */
+    background: rgba(10, 10, 10, 1);
+    display: flex;
+    flex-direction: column; /* Вертикальная ориентация */
+    align-items: center;
+    justify-content: space-between; /* Разделяем верх и центр */
+    padding: 20px 0;
+    z-index: 10;
+}
+
+.logo {
+    font-family: Corrida, serif;
+    color: white !important;
+}
+
+.bi {
+    color: #353535;
+    padding: 10px 20px;
+    font-size: 1em;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.navButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.bi-grid-fill:hover {
+    transition: ease-in-out 0.1s;
+    color: #f4f5f7;
+}
+
+.navButtons i:hover {
+    transition: ease-in-out 0.1s;
+    background-color: #171717;
+}
+
+
+.menu {
+    color: white;
+}

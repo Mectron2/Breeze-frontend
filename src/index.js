@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App'; // Если он вам нужен
 import reportWebVitals from './reportWebVitals';
-import PostList from './Post'; // Импортируем правильно
+import PostList from './Post';
+import AddPost from './AddPost';
+import Header from './Header';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <PostList /> // Используем PostList вместо Post
+    <div id="main">
+        <Header />
+        <PostList />
+        <AddPost />
+    </div>
 );
 
-// Отправка метрик
 reportWebVitals();

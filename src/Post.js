@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Post.css';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);  // Хранение постов
@@ -38,8 +39,8 @@ const PostList = () => {
                 <article key={post.id} className="post">
                     <header className="postHeader">
                         <h2 className="postTitle">{post.title}</h2>
-                        {post.imageUrl && (
-                            <img className="postImage" src={post.imageUrl} alt="Post Image" />
+                        {post.imagePath && (
+                            <img className="postImage" src={post.imagePath} alt="Post Image" />
                         )}
                         <p className="postDate">
                             <span className="postDateLabel">Posted on: </span>

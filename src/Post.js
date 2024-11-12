@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Post.css';
+import apiClient from './util/apiClient';
+import LikePost from "./LikePost";
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);  // Хранение постов
@@ -50,6 +52,9 @@ const PostList = () => {
                     <div className="postContent">
                         <p className="postText">{post.content}</p>
                     </div>
+                    <footer>
+                        <LikePost postId={post.id} />  {/* Добавляем компонент лайка для каждого поста */}
+                    </footer>
                 </article>
             ))}
         </div>

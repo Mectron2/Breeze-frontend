@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const AuthModal = ({ onAuthChange }) => {
+const AuthModal = () => {
     const [showModal, setShowModal] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
@@ -26,7 +26,7 @@ const AuthModal = ({ onAuthChange }) => {
                 });
                 const token = response.data.accessToken;
                 localStorage.setItem('jwtToken', token);
-                onAuthChange(true);  // Уведомляем родительский компонент о успешной авторизации
+                window.location.reload()
             } else {
                 await axios.post('http://localhost:8080/api/auth/register', {
                     username: formData.username,

@@ -41,7 +41,7 @@ const Header = () => {
                             title="Logout"
                         ></i>
                     ) : (
-                        <AuthModal onAuthChange={handleAuthChange} />
+                        <AuthModal />
                     )}
                 </nav>
             </div>

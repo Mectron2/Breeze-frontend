@@ -1,0 +1,19 @@
+.postLikesCount {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;  /* Прижимает элементы по горизонтали */
+    align-items: center;
+    width: 100%;
+    height: 100%; /* Прижимает элементы по вертикали */
+    margin: 0;
+}
+
+.postLikesCount p {
+    margin-bottom: 0;  /* Убираем нижний отступ */
+}
+
+.bi-heart-fill, .bi-heart {
+    margin-top: 1px;
+    width: 46px !important;
+}
+

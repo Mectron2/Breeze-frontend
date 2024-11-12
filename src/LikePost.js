@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from './util/apiClient';
+import './LikePost.css';
 
 const LikePost = ({ postId }) => {
     const [isLiked, setIsLiked] = useState(false);  // Храним информацию о лайке
@@ -59,13 +60,13 @@ const LikePost = ({ postId }) => {
     }
 
     return (
-        <div>
+        <div className="postLikesCount">
             <i
                 className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`}
                 onClick={handleLikeToggle}
                 style={{ cursor: 'pointer' }}
             ></i>
-            <p>{likesCount} Likes</p>
+            <p className="likesCount">{likesCount}</p>
         </div>
     );
 };

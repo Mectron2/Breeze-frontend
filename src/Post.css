@@ -57,3 +57,9 @@
 .postUsername {
     font-weight: bold;
 }
+
+.likesAndComments {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

@@ -60,3 +60,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
 }
+
+.bi-chat-left-text {
+    color: #f4f5f7 !important;
+}

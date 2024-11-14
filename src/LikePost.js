@@ -60,14 +60,11 @@ const LikePost = ({ postId }) => {
     }
 
     return (
-        <div className="postLikesCount">
-            <i
-                className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`}
-                onClick={handleLikeToggle}
-                style={{ cursor: 'pointer' }}
-            ></i>
-            <p className="likesCount">{likesCount}</p>
-        </div>
+        <i
+            className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`}
+            onClick={handleLikeToggle}
+            style={{ cursor: 'pointer' }}
+        > {likesCount}</i>
     );
 };
 

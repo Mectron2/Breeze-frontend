@@ -58,8 +58,10 @@ const PostList = () => {
                         <p className="postText">{post.content}</p>
                     </div>
                     <footer>
-                        <LikePost postId={post.id} />  {/* Добавляем компонент лайка для каждого поста */}
-                        <CommentPost post={post} postId={post.id} initialCommentsCount={post.commentsCount} />
+                        <div className="likesAndComments">
+                            <LikePost postId={post.id} />  {/* Добавляем компонент лайка для каждого поста */}
+                            <CommentPost post={post} postId={post.id} initialCommentsCount={post.commentsCount} />
+                        </div>
                     </footer>
                 </article>
             ))}

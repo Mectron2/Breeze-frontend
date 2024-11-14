@@ -76,9 +76,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
 
     return (
         <>
-            <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-                Комментарии ({initialCommentsCount || comments.length})
-            </button>
+            <i className="bi bi-chat-left-text" onClick={() => setShowModal(true)}> {initialCommentsCount || comments.length} </i>
             <CSSTransition
                 in={showModal}
                 timeout={100}
@@ -89,7 +87,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                 onExited={enableScroll}
             >
                 <div ref={modalRef} className="modal-wrapper">
-                    <div className="modal" tabIndex="-1" style={{ display: 'block' }}>
+                    <div className="modal" tabIndex="-1" style={{display: 'block'}}>
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
@@ -101,14 +99,15 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                                         />
                                         <h5 className="modal-title">{post.title}</h5>
                                     </header>
-                                    <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                                    <button type="button" className="btn-close"
+                                            onClick={() => setShowModal(false)}></button>
                                 </div>
                                 <div className="modal-body">
                                     <p className="postContent">{post.content}</p>
                                     {post.imagePath && (
-                                        <img className="postImage" src={post.imagePath} alt="Post" />
+                                        <img className="postImage" src={post.imagePath} alt="Post"/>
                                     )}
-                                    <hr />
+                                    <hr/>
                                     {loading ? (
                                         <p>Загрузка комментариев...</p>
                                     ) : error ? (

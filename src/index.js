@@ -5,6 +5,7 @@ import PostList from './Post';
 import Header from './Header';
 import UserPage from './UserPage';
 import './index.css';
+import UserPostList from "./UserPostList";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,12 +23,15 @@ root.render(
                 }
             />
             <Route
-                path="/user/:id"
+                path="/user/:username"
                 element={
                     <>
-                        <Header />
-                        <UserPage />
-                    </>
+                        <Header/>
+                            <div className="userPostsContainer">
+                                <UserPage/>
+                                <UserPostList/>
+                            </div>
+                        </>
                 }
             />
         </Routes>

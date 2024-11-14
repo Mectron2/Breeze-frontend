@@ -6,7 +6,7 @@ const UserAvatar = ({ username, imagePath, userId }) => {
     const navigate = useNavigate();
 
     const handleUserClick = () => {
-        navigate(`/user/${userId}`);
+        navigate(`/user/${username}`);
     };
 
     return (

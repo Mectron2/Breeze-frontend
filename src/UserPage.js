@@ -1,14 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import './UserPage.css';
 
 const UserPage = () => {
-    const { id } = useParams();
+    const { username } = useParams();
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/user/${username}`);
+                setUserData(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError('Ошибка при загрузке данных пользователя');
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, [username]);
+
+    if (loading) return <p>Загрузка...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
-        <div>
-            <h1>Страница пользователя</h1>
-            <p>Здесь будет информация о пользователе с ID: {id}</p>
-            {/* Можно добавить дополнительную информацию, например, запрос к API для получения данных пользователя */}
+        <div className="userInfo">
+            <div className="userHeader">
+            <h1>{userData.username}</h1>
+                {userData.profileImagePath && (
+                    <img
+                        src={userData.profileImagePath}
+                        alt={`${userData.username}'s profile`}
+                        style={{ width: '150px', height: '150px', borderRadius: '50%' }}
+                    />
+                )}
+            </div>
+            <p>ID: {userData.id}</p>
+            <p>Биография: {userData.bio || 'Нет информации'}</p>
+            <p>Дата создания: {new Date(userData.createdAt).toLocaleDateString()}</p>
+            <div className="author">
+                <h2>By {username}</h2>
+            </div>
         </div>
     );
 };

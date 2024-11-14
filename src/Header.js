@@ -4,10 +4,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { isAuthenticated, logout } from './util/authClient';
 import AuthModal from "./AuthModal";
 import AddPost from "./AddPost";
+import { useNavigate } from 'react-router-dom';
 import './AddPost.css';
 
 const Header = () => {
     const [authenticated, setAuthenticated] = useState(false);
+
+    const navigate = useNavigate();
 
     // Обработчик клика на выход
     const handleLogoutClick = () => {
@@ -21,17 +24,12 @@ const Header = () => {
         setAuthenticated(checkAuth);  // Обновляем состояние компонента
     }, []);  // Выполняется один раз при монтировании компонента
 
-    // Функция для обновления состояния авторизации из AuthModal
-    const handleAuthChange = (status) => {
-        setAuthenticated(status);  // Обновляем состояние на основе успеха авторизации
-    };
-
     return (
         <div className="header">
             <div className="logo bi fs-4">B</div>
             <div className="buttons">
                 <nav className="navButtons">
-                    <i className="bi bi-house-fill fs-4"></i>
+                    <i className="bi bi-house-fill fs-4" onClick={() => navigate(`/`)}></i>
                     {authenticated ? (<AddPost />) : null}
                     <i className="bi bi-search fs-4"></i>
                     {authenticated ? (

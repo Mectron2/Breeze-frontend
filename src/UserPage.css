@@ -1,0 +1,29 @@
+.userInfo {
+    margin-top: 100px;
+    color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userHeader {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 30px;
+    align-items: center;
+}
+
+.user-profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #3d3d5c;
+    margin-bottom: 20px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.author {
+    margin-top: 60px;
+    margin-bottom: -60px;
+}

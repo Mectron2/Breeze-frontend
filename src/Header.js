@@ -26,7 +26,7 @@ const Header = () => {
 
     return (
         <div className="header">
-            <div className="logo bi fs-4">B</div>
+            <div className="logo bi fs-4" onClick={() => navigate(`/`)}>B</div>
             <div className="buttons">
                 <nav className="navButtons">
                     <i className="bi bi-house-fill fs-4" onClick={() => navigate(`/`)}></i>

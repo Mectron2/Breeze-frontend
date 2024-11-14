@@ -18,11 +18,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
 
             try {
                 setLoading(true);
-                const response = await apiClient.get(`/post/comments/${postId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
+                const response = await apiClient.get(`/post/comments/${postId}`);
                 setComments(response.data);
                 setLoading(false);
             } catch (err) {
@@ -41,17 +37,9 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
             await apiClient.post(`/post/comments`, {
                 postId: postId,
                 content: newComment
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
             });
             setNewComment('');
-            const updatedComments = await apiClient.get(`/post/comments/${postId}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const updatedComments = await apiClient.get(`/post/comments/${postId}`);
             setComments(updatedComments.data);
         } catch (err) {
             console.error('Ошибка при добавлении комментария:', err);

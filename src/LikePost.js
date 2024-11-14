@@ -11,20 +11,16 @@ const LikePost = ({ postId }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Проверяем, лайкнут ли пост
-                const likeStatusResponse = await apiClient.get(`/post/isLiked?postId=${postId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`  // Получаем токен из хранилища
-                    }
-                });
-                setIsLiked(likeStatusResponse.data);  // Обновляем состояние лайка
+                if (localStorage.getItem('jwtToken') != null) {
+                    // Проверяем, лайкнут ли пост
+                    const likeStatusResponse = await apiClient.get(`/post/isLiked?postId=${postId}`);
+                    setIsLiked(likeStatusResponse.data);  // Обновляем состояние лайка
+                } else {
+                    setIsLiked(false);
+                }
 
                 // Получаем количество лайков
-                const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`  // Получаем токен из хранилища
-                    }
-                });
+                const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`);
                 setLikesCount(likesCountResponse.data);  // Обновляем количество лайков
 
                 setLoading(false);  // Отключаем индикатор загрузки

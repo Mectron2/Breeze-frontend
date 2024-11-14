@@ -40,3 +40,20 @@
     font-size: 0.9em; /* Меньший размер шрифта для даты */
     color: #aaa; /* Более светлый цвет для даты */
 }
+
+.postUser {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.postUserAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.postUsername {
+    font-weight: bold;
+}

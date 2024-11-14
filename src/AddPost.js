@@ -42,7 +42,7 @@ const AddPost = () => {
 
         const postData = {
             title: title,
-            imagePath: `http://localhost:8080${uploadedImagePath}`, // Используем путь загруженного файла
+            imagePath: updatedContentType === 'TEXT' ? null : `http://localhost:8080${uploadedImagePath}`, // Используем путь загруженного файла
             content: content,
             contentType: updatedContentType, // Используем обновленный contentType
         };
@@ -110,6 +110,7 @@ const AddPost = () => {
                                     <label htmlFor="imageFile" className="form-label">Image:</label>
                                     <input
                                         type="file"
+                                        className="form-control"
                                         id="imageFile"
                                         name="imageFile"
                                         accept="image/png, image/jpeg"

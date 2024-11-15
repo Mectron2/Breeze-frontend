@@ -6,23 +6,39 @@ import AuthModal from "./AuthModal";
 import AddPost from "./AddPost";
 import { useNavigate } from 'react-router-dom';
 import './AddPost.css';
+import UserAvatar from "./UserAvatar";
+import apiClient from "./util/apiClient";
 
 const Header = () => {
     const [authenticated, setAuthenticated] = useState(false);
-
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
 
-    // Обработчик клика на выход
     const handleLogoutClick = () => {
-        logout();  // Вызываем logout без перезагрузки страницы
-        setAuthenticated(false);  // Обновляем состояние сразу
+        logout();
+        setAuthenticated(false);
     };
 
-    // Проверка состояния авторизации при монтировании компонента
+    const fetchCurrentUser = async () => {
+        const checkAuth = isAuthenticated();
+        setAuthenticated(checkAuth);
+
+        if (checkAuth) {
+            try {
+                const response = await apiClient.get("/user/WhoAmI");
+                const userData = response.data;
+                setCurrentUser(userData);
+            } catch (error) {
+                console.error("Error fetching current user:", error);
+            }
+        }
+    };
+
     useEffect(() => {
-        const checkAuth = isAuthenticated(); // Получаем актуальный статус авторизации
-        setAuthenticated(checkAuth);  // Обновляем состояние компонента
-    }, []);  // Выполняется один раз при монтировании компонента
+        const checkAuth = isAuthenticated();
+        setAuthenticated(checkAuth);
+        fetchCurrentUser()
+        }, []);
 
     return (
         <div className="header">
@@ -31,19 +47,21 @@ const Header = () => {
                 <nav className="navButtons">
                     <i className="bi bi-house-fill fs-4" onClick={() => navigate(`/`)}></i>
                     {authenticated ? (<AddPost />) : null}
-                    <i className="bi bi-search fs-4"></i>
+                    <i className="bi bi-search fs-4" onClick={() => navigate(`/search`)}></i>
                     {authenticated ? (
                         <i
                             className="bi bi-box-arrow-right fs-4"
                             onClick={handleLogoutClick}
                             title="Logout"
                         ></i>
-                    ) : (
-                        <AuthModal />
-                    )}
+                    ) : null}
                 </nav>
             </div>
-            <i className="bi bi-grid-fill fs-4"></i>
+            {authenticated && currentUser ? (
+                <UserAvatar userId={currentUser.id} imagePath={currentUser.profileImagePath} username={currentUser.username} dontDisplayNickname={true}/>
+            ) : (
+                <AuthModal />
+            )}
         </div>
     );
 };

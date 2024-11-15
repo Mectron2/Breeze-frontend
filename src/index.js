@@ -6,6 +6,7 @@ import Header from './Header';
 import UserPage from './UserPage';
 import './index.css';
 import UserPostList from "./UserPostList";
+import SearchPost from "./searchPost";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -32,6 +33,17 @@ root.render(
                                 <UserPostList/>
                             </div>
                         </>
+                }
+            />
+            <Route
+                path="/search"
+                element={
+                <>
+                    <Header />
+                    <div className="postContainer">
+                        <SearchPost />
+                    </div>
+                </>
                 }
             />
         </Routes>

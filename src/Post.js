@@ -47,11 +47,11 @@ const PostList = () => {
                         </div>
                         <h2 className="postTitle">{post.title}</h2>
                         {post.imagePath && (
-                            <img className="postImage" src={post.imagePath} alt="Post Image" />
+                            <img className="postImage" src={post.imagePath} alt="PostImage" />
                         )}
                         <p className="postDate">
                             <span className="postDateLabel">Posted on: </span>
-                            <span className="postDateValue">{post.createdAt}</span>
+                            <span className="postDateValue">{new Date(post.createdAt).toLocaleString()}</span>
                         </p>
                     </header>
                     <div className="postContent">

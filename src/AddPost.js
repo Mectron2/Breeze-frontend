@@ -6,7 +6,7 @@ import './AddPost.css';
 
 const AddPost = () => {
     const [title, setTitle] = useState('');
-    const [imageFile, setImageFile] = useState(null); // Состояние для файла
+    const [imageFile, setImageFile] = useState(null);
     const [contentType, setContentType] = useState('TEXT');
     const [content, setContent] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
@@ -16,9 +16,8 @@ const AddPost = () => {
 
         const updatedContentType = imageFile ? 'IMAGE' : 'TEXT';
 
-        let uploadedImagePath = ''; // Путь к загруженному изображению
+        let uploadedImagePath = '';
 
-        // Если файл выбран, загрузим его
         if (imageFile) {
             const formData = new FormData();
             formData.append('file', imageFile); // Добавляем файл в FormData

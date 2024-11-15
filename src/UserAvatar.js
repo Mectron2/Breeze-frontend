@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserAvatar.css';
 
-const UserAvatar = ({ username, imagePath, userId }) => {
+const UserAvatar = ({ username, imagePath, userId, dontDisplayNickname }) => {
     const navigate = useNavigate();
 
     const handleUserClick = () => {
@@ -12,7 +12,7 @@ const UserAvatar = ({ username, imagePath, userId }) => {
     return (
         <div className="userAvatar" onClick={handleUserClick} style={{ cursor: 'pointer' }}>
             <img src={imagePath} alt={`${username}'s avatar`} className="userAvatarImage" />
-            <span className="userAvatarName">{username}</span>
+            {!dontDisplayNickname && (<span className="userAvatarName">{username}</span>)}
         </div>
     );
 };

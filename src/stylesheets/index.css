@@ -27,7 +27,7 @@ body {
 }
 
 input[type="file"]::-webkit-file-upload-button {
-    background-color: #007bff !important; /* Синий цвет */
+    background-color: #007bff !important;
     color: white;
     border: none;
     padding: 10px 20px;

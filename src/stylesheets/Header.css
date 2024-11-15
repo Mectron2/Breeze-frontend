@@ -2,12 +2,12 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 90px; /* Ширина вертикального блока */
-    height: 100vh; /* Высота на весь экран */
+    width: 90px;
+    height: 100vh;
     display: flex;
-    flex-direction: column; /* Вертикальная ориентация */
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Разделяем верх и центр */
+    justify-content: space-between;
     padding: 20px 0;
     z-index: 10;
 }

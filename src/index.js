@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PostList from './Post';
-import Header from './Header';
-import UserPage from './UserPage';
-import './index.css';
-import UserPostList from "./UserPostList";
-import SearchPost from "./searchPost";
+import PostList from './components/Post';
+import Header from './components/Header';
+import UserPage from './components/UserPage';
+import './stylesheets/index.css';
+import UserPostList from "./components/UserPostList";
+import SearchPost from "./components/searchPost";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import apiClient from './util/apiClient'; // Импортируем наш клиент
+import apiClient from '../util/apiClient';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import './AddPost.css';
+import '../stylesheets/AddPost.css';
 
 const AddPost = () => {
     const [title, setTitle] = useState('');
@@ -20,30 +20,30 @@ const AddPost = () => {
 
         if (imageFile) {
             const formData = new FormData();
-            formData.append('file', imageFile); // Добавляем файл в FormData
+            formData.append('file', imageFile);
 
             try {
                 const response = await apiClient.post('/files/upload', formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data', // Указываем, что это форма с файлом
+                        'Content-Type': 'multipart/form-data',
                     },
                 });
 
                 if (response.status === 200 || response.status === 201) {
-                    uploadedImagePath = response.data; // Путь к загруженному файлу
+                    uploadedImagePath = response.data;
                 }
             } catch (error) {
                 setResponseMessage('Error while uploading file.');
                 console.error('Error uploading file:', error);
-                return; // Выход из функции, если файл не удалось загрузить
+                return;
             }
         }
 
         const postData = {
             title: title,
-            imagePath: updatedContentType === 'TEXT' ? null : `http://localhost:8080${uploadedImagePath}`, // Используем путь загруженного файла
+            imagePath: updatedContentType === 'TEXT' ? null : `http://localhost:8080${uploadedImagePath}`,
             content: content,
-            contentType: updatedContentType, // Используем обновленный contentType
+            contentType: updatedContentType,
         };
 
         try {
@@ -53,7 +53,7 @@ const AddPost = () => {
                 setResponseMessage('Post successfully added!');
                 console.log('Server response:', response.data);
                 setTitle('');
-                setImageFile(null); // Сбрасываем файл
+                setImageFile(null);
                 setContent('');
                 setContentType('TEXT');
             } else {
@@ -113,7 +113,7 @@ const AddPost = () => {
                                         id="imageFile"
                                         name="imageFile"
                                         accept="image/png, image/jpeg"
-                                        onChange={(e) => setImageFile(e.target.files[0])} // Устанавливаем выбранный файл
+                                        onChange={(e) => setImageFile(e.target.files[0])}
                                     />
                                 </div>
                                 <div className="mb-3">

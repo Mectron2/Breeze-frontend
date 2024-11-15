@@ -1,11 +1,12 @@
 .container {
     border: solid 1px #2d2d2d;
     margin-top: 100px;
+    margin-bottom: 100px;
     border-radius: 2vw;
     overflow: hidden;
     background-color: #181818;
     padding: 0;
-    display: inline-block; /* Обеспечиваем блочный стиль */
+    display: inline-block;
     width: 50% !important;
 }
 
@@ -22,14 +23,14 @@
 }
 
 .postImage {
-    width: 100%; /* Ширина изображения на 100% */
+    width: 100%;
     height: auto;
-    border-radius: 15px; /* Скругление углов изображения */
-    margin-bottom: 10px; /* Отступ снизу для изображения */
+    border-radius: 15px;
+    margin-bottom: 10px;
 }
 
 .postHeader {
-    margin-bottom: 10px; /* Отступ между заголовком и контентом поста */
+    margin-bottom: 10px;
 }
 
 .postTitle {
@@ -37,8 +38,8 @@
 }
 
 .postDate {
-    font-size: 0.9em; /* Меньший размер шрифта для даты */
-    color: #aaa; /* Более светлый цвет для даты */
+    font-size: 0.9em;
+    color: #aaa;
 }
 
 .postUser {

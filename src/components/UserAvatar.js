@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import './UserAvatar.css';
+import '../stylesheets/UserAvatar.css';
 
 const UserAvatar = ({ username, imagePath, userId, dontDisplayNickname }) => {
     const navigate = useNavigate();

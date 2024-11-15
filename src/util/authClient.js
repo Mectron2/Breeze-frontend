@@ -1,9 +1,7 @@
-// auth.js
 import apiClient from './apiClient';
 
 const TOKEN_KEY = 'jwtToken';
 
-// Функция проверки, залогинен ли пользователь
 export const isAuthenticated = () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
@@ -13,7 +11,6 @@ export const isAuthenticated = () => {
     return false;
 };
 
-// Функция выхода из аккаунта
 export const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     delete apiClient.defaults.headers.common['Authorization'];

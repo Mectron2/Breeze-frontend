@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import apiClient from './util/apiClient';
-import './LikePost.css';
+import apiClient from '../util/apiClient';
+import '../stylesheets/LikePost.css';
 import axios from "axios";
 
 const LikePost = ({ postId }) => {

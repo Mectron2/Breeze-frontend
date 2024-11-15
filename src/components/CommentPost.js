@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import apiClient from './util/apiClient';
-import './CommentPost.css';
-import UserAvatar from "./UserAvatar";
+import apiClient from '../util/apiClient';
+import '../stylesheets/CommentPost.css';
+import UserAvatar from "../components/UserAvatar";
 
 const CommentPost = ({ post, postId, initialCommentsCount }) => {
     const [comments, setComments] = useState([]);

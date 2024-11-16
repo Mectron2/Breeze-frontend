@@ -74,7 +74,6 @@ const AddPost = () => {
 
     return (
         <div>
-            {/* Кнопка для открытия модального окна */}
             <i
                 type="button"
                 className="bi bi-plus-square-fill fs-4"
@@ -83,7 +82,6 @@ const AddPost = () => {
             >
             </i>
 
-            {/* Модальное окно */}
             <div
                 className="modal fade"
                 id="addPostModal"

@@ -18,7 +18,7 @@ const SearchPost = () => {
 
             const response = await fetch(url);
             if (!response.ok) {
-                throw new Error('Ошибка сети: ' + response.statusText);
+                throw new Error('Error: ' + response.statusText);
             }
             const data = await response.json();
             setPosts(data);
@@ -53,12 +53,12 @@ const SearchPost = () => {
                         onChange={handleInputChange}
                         placeholder="What are we looking for?"
                     />
-                    <button type="submit" className="btn btn-dark m-3">Поиск</button>
+                    <button type="submit" className="btn btn-dark m-3">Search</button>
             </form>
 
             <div className="container">
-                {loading && <div>Загрузка постов...</div>}
-                {error && <div>Ошибка: {error}</div>}
+                {loading && <div>Loading...</div>}
+                {error && <div>Error: {error}</div>}
                 {!loading && !error && <PostsList posts={posts}/>}
             </div>
         </div>

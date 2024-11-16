@@ -5,7 +5,6 @@ import PostsList from '../components/PostsList';
 
 const UserPostList = () => {
     const { username } = useParams();
-    console.log("Username from params:", username);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,7 +20,7 @@ const UserPostList = () => {
                     },
                 });
                 if (!response.ok) {
-                    throw new Error('Ошибка сети: ' + response.statusText);
+                    throw new Error('Error: ' + response.statusText);
                 }
                 const data = await response.json();
                 setPosts(data.postDtoList);
@@ -38,13 +37,13 @@ const UserPostList = () => {
     return (
         <div className="wrapper">
             <div className="container">
-                {loading && <div>Загрузка постов пользователя...</div>}
-                {error && <div>Ошибка: {error}</div>}
+                {loading && <div>Loading...</div>}
+                {error && <div>Error: {error}</div>}
                 {!loading && !error && (
                     posts.length > 0 ? (
-                        <PostsList posts={posts} />
+                        <PostsList posts={posts} setPosts={setPosts}/>
                     ) : (
-                        <div>У этого пользователя пока нет постов.</div>
+                        <div>This user has no posts yet.</div>
                     )
                 )}
             </div>

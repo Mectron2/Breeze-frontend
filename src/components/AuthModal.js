@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AuthModal = () => {
+    // eslint-disable-next-line
     const [showModal, setShowModal] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [imageFile, setImageFile] = useState(null);
@@ -42,7 +43,7 @@ const AuthModal = () => {
                         });
 
                         if (response.status === 200 || response.status === 201) {
-                            formData.profileImagePath = `http://localhost:8080${response.data}`; // Путь к загруженному файлу
+                            formData.profileImagePath = `http://localhost:8080${response.data}`;
                         }
                     } catch (error) {
                         console.error('Error uploading file:', error);
@@ -66,14 +67,13 @@ const AuthModal = () => {
             }
             setShowModal(false);
         } catch (error) {
-            alert('Ошибка: ' + error.message);
+            alert('Error: ' + error.message);
         }
     };
 
     return (
         <div>
             <i className="bi bi-person-fill fs-4"
-               type="button"
                data-bs-toggle="modal"
                data-bs-target="#authModal">
             </i>
@@ -88,13 +88,13 @@ const AuthModal = () => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">{isLogin ? 'Войти' : 'Регистрация'}</h5>
+                            <h5 className="modal-title">{isLogin ? 'Sign in' : 'Sign up'}</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
-                                    <label className="form-label">Имя пользователя</label>
+                                    <label className="form-label">Username</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -105,7 +105,7 @@ const AuthModal = () => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Пароль</label>
+                                    <label className="form-label">Password</label>
                                     <input
                                         type="password"
                                         className="form-control"
@@ -152,13 +152,13 @@ const AuthModal = () => {
                                     </div>
                                 )}
                                 <button type="submit" className="btn btn-success">
-                                    {isLogin ? 'Войти' : 'Зарегистрироваться'}
+                                    {isLogin ? 'Sign in' : 'Sign Up'}
                                 </button>
                             </form>
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-secondary" onClick={() => setIsLogin(!isLogin)}>
-                                {isLogin ? 'Переключиться на регистрацию' : 'Переключиться на вход'}
+                                {isLogin ? 'Sign Up' : 'Sign in'}
                             </button>
                         </div>
                     </div>

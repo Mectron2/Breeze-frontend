@@ -8,6 +8,8 @@
     padding: 0;
     display: inline-block;
     width: 50% !important;
+    min-width: 600px !important;
+    max-width: 900px !important;
 }
 
 
@@ -42,9 +44,15 @@
     color: #aaa;
 }
 
+.bi-trash {
+    max-width: 10px !important;
+    color: #aaa !important;
+}
+
 .postUser {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 

@@ -13,7 +13,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
     const [newComment, setNewComment] = useState('');
     const [showModal, setShowModal] = useState(false);
     const modalRef = useRef(null);
-    const [commentsCount, setCommentsCount] = useState(initialCommentsCount || 0); // Состояние для количества комментариев
+    const [commentsCount, setCommentsCount] = useState(initialCommentsCount || 0);
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -23,10 +23,10 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                 setLoading(true);
                 const response = await apiClient.get(`/post/comments/${postId}`);
                 setComments(response.data);
-                setCommentsCount(response.data.length); // Обновляем количество комментариев
+                setCommentsCount(response.data.length);
                 setLoading(false);
             } catch (err) {
-                setError('Ошибка при загрузке комментариев');
+                setError('Error loading comments');
                 setLoading(false);
             }
         };
@@ -45,20 +45,18 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
             setNewComment('');
             const updatedComments = await apiClient.get(`/post/comments/${postId}`);
             setComments(updatedComments.data);
-            setCommentsCount(updatedComments.data.length); // Обновляем количество комментариев
+            setCommentsCount(updatedComments.data.length);
         } catch (err) {
-            console.error('Ошибка при добавлении комментария:', err);
+            console.error('Error adding comment:', err);
         }
     };
 
-    // Функция для отключения прокрутки и добавления отступа
     const disableScroll = () => {
         const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
         document.body.style.overflow = 'hidden';
         document.body.style.paddingRight = `${scrollBarWidth}px`;
     };
 
-    // Функция для восстановления прокрутки и удаления отступа
     const enableScroll = () => {
         setTimeout(() => {
             document.body.style.overflow = 'auto';
@@ -68,7 +66,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
 
     return (
         <>
-            <i className="bi bi-chat-left-text" onClick={() => setShowModal(true)}> {commentsCount} </i> {/* Используем commentsCount */}
+            <i className="bi bi-chat-left-text" onClick={() => setShowModal(true)}> {commentsCount} </i>
             <CSSTransition
                 in={showModal}
                 timeout={100}
@@ -101,13 +99,13 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                                     )}
                                     <hr />
                                     {loading ? (
-                                        <p>Загрузка комментариев...</p>
+                                        <p>Loading...</p>
                                     ) : error ? (
                                         <p>{error}</p>
                                     ) : (
                                         <ul className="comment-list">
                                             {comments.map(comment => (
-                                                <li key={comment.user.id} className="comment-item">
+                                                <li key={comment.id} className="comment-item">
                                                     <div className="comment-header">
                                                         <img
                                                             src={comment.user.profileImagePath}
@@ -135,9 +133,9 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                                         onClick={handleAddComment}
                                         disabled={!authenticated}
                                     >
-                                        Отправить
+                                        Submit
                                     </button>
-                                    {!authenticated && <p className="text-danger">Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>}
+                                    {!authenticated && <p className="text-danger">Please, login to submit a comment.</p>}
                                 </div>
                             </div>
                         </div>

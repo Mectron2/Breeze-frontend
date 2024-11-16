@@ -21,7 +21,7 @@ const LikePost = ({ postId }) => {
                     setLikesCount(likesCountResponse.data);
                 } catch (err) {
                     console.error('Error fetching likes count:', err);
-                    setError('Не удалось загрузить количество лайков.');
+                    setError('Error fetching likes count.');
                 }
                 setLoading(false);
                 return;
@@ -35,7 +35,7 @@ const LikePost = ({ postId }) => {
                 setLikesCount(likesCountResponse.data);
                 setLoading(false);
             } catch (err) {
-                console.warn("Сессия истекла. Выполняется выход пользователя.");
+                console.warn("Session expired. Logging out...");
                 handleLogout();
             }
         };
@@ -45,7 +45,6 @@ const LikePost = ({ postId }) => {
 
     const handleLikeToggle = async () => {
         if (!authenticated) {
-            alert('Пожалуйста, войдите в систему, чтобы поставить лайк.');
             return;
         }
 
@@ -66,7 +65,7 @@ const LikePost = ({ postId }) => {
     };
 
     if (loading) {
-        return <div>Загрузка...</div>;
+        return <div>Loading...</div>;
     }
 
     return (
@@ -74,7 +73,7 @@ const LikePost = ({ postId }) => {
                 className={`bi ${isLiked ? 'bi-heart-fill liked' : 'bi-heart'}`}
                 onClick={handleLikeToggle}
                 style={{ cursor: authenticated ? 'pointer' : 'not-allowed', color: isLiked ? 'red' : 'black' }}
-                title={authenticated ? (isLiked ? 'Нравится' : 'Нравится') : 'Войдите, чтобы поставить лайк'}
+                title={authenticated ? (isLiked ? 'Like' : 'Like') : 'Sign in to like it'}
             > {likesCount}</i>
     );
 };

@@ -16,7 +16,7 @@ const UserPage = () => {
                 setUserData(response.data);
                 setLoading(false);
             } catch (err) {
-                setError('Ошибка при загрузке данных пользователя');
+                setError('Error loading user data.');
                 setLoading(false);
             }
         };
@@ -24,7 +24,7 @@ const UserPage = () => {
         fetchUserData();
     }, [username]);
 
-    if (loading) return <p>Загрузка...</p>;
+    if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
     return (
@@ -40,8 +40,8 @@ const UserPage = () => {
                 )}
             </div>
             <p>ID: {userData.id}</p>
-            <p>Биография: {userData.bio || 'Нет информации'}</p>
-            <p>Дата создания: {new Date(userData.createdAt).toLocaleDateString()}</p>
+            <p>Bio: {userData.bio || 'No information'}</p>
+            <p>Account creation date: {new Date(userData.createdAt).toLocaleDateString()}</p>
             <div className="author">
                 <h2>By {username}</h2>
             </div>

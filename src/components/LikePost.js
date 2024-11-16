@@ -1,47 +1,67 @@
-import React, { useState, useEffect } from 'react';
+// src/components/LikePost.jsx
+import React, { useState, useEffect, useContext } from 'react';
 import apiClient from '../util/apiClient';
 import '../stylesheets/LikePost.css';
-import axios from "axios";
+import { AuthContext } from '../context/AuthContext';
 
 const LikePost = ({ postId }) => {
+    const { authenticated, handleLogout } = useContext(AuthContext);
     const [isLiked, setIsLiked] = useState(false);
     const [loading, setLoading] = useState(true);
     const [likesCount, setLikesCount] = useState(0);
+    // eslint-disable-next-line
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (localStorage.getItem('jwtToken') != null) {
-                    const likeStatusResponse = await apiClient.get(`/post/isLiked?postId=${postId}`);
-                    setIsLiked(likeStatusResponse.data);
-                } else {
-                    setIsLiked(false);
+        const fetchLikeData = async () => {
+            if (!authenticated) {
+                setIsLiked(false);
+                try {
+                    const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`);
+                    setLikesCount(likesCountResponse.data);
+                } catch (err) {
+                    console.error('Error fetching likes count:', err);
+                    setError('Не удалось загрузить количество лайков.');
                 }
+                setLoading(false);
+                return;
+            }
 
-                const likesCountResponse = await axios.get(`http://localhost:8080/api/post/getLikes?postId=${postId}`);
+            try {
+                const likeStatusResponse = await apiClient.get(`/post/isLiked?postId=${postId}`);
+                setIsLiked(likeStatusResponse.data);
+
+                const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`);
                 setLikesCount(likesCountResponse.data);
                 setLoading(false);
             } catch (err) {
-                console.error('Error fetching data:', err);
-                setLoading(false);
+                console.warn("Сессия истекла. Выполняется выход пользователя.");
+                handleLogout();
             }
         };
 
-        fetchData();
-    }, [postId]);
+        fetchLikeData();
+    }, [postId, authenticated, handleLogout]);
 
     const handleLikeToggle = async () => {
+        if (!authenticated) {
+            alert('Пожалуйста, войдите в систему, чтобы поставить лайк.');
+            return;
+        }
+
         try {
             if (isLiked) {
                 await apiClient.post(`/post/unlike?postId=${postId}`, {});
+                setIsLiked(false);
+                setLikesCount(prevCount => prevCount - 1);
             } else {
                 await apiClient.post(`/post/like?postId=${postId}`, {});
+                setIsLiked(true);
+                setLikesCount(prevCount => prevCount + 1);
             }
-            setIsLiked(!isLiked);
-
-            setLikesCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
         } catch (err) {
-            console.error('Error toggling like:', err);
+            console.warn("Session has expired.");
+            handleLogout();
         }
     };
 
@@ -50,11 +70,12 @@ const LikePost = ({ postId }) => {
     }
 
     return (
-        <i
-            className={`bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}`}
-            onClick={handleLikeToggle}
-            style={{ cursor: 'pointer' }}
-        > {likesCount}</i>
+            <i
+                className={`bi ${isLiked ? 'bi-heart-fill liked' : 'bi-heart'}`}
+                onClick={handleLikeToggle}
+                style={{ cursor: authenticated ? 'pointer' : 'not-allowed', color: isLiked ? 'red' : 'black' }}
+                title={authenticated ? (isLiked ? 'Нравится' : 'Нравится') : 'Войдите, чтобы поставить лайк'}
+            > {likesCount}</i>
     );
 };
 

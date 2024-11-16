@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import apiClient from '../util/apiClient';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../stylesheets/AddPost.css';
+import {useNavigate} from "react-router-dom";
+import { AuthContext } from '../context/AuthContext';
 
 const AddPost = () => {
+    const { currentUser } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [imageFile, setImageFile] = useState(null);
+    // eslint-disable-next-line
     const [contentType, setContentType] = useState('TEXT');
     const [content, setContent] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
@@ -56,6 +61,7 @@ const AddPost = () => {
                 setImageFile(null);
                 setContent('');
                 setContentType('TEXT');
+                navigate(`/user/${currentUser.user.username}`)
             } else {
                 setResponseMessage('Failed to add post.');
                 console.error('Error response:', response.statusText);
@@ -126,7 +132,7 @@ const AddPost = () => {
                                         required
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="btn btn-success">Add Post</button>
+                                <button type="submit" className="btn btn-success" data-bs-dismiss="modal">Add Post</button>
                             </form>
                             {responseMessage && <p className="mt-2">{responseMessage}</p>}
                         </div>

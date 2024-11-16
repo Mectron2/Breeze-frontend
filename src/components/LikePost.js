@@ -4,44 +4,10 @@ import apiClient from '../util/apiClient';
 import '../stylesheets/LikePost.css';
 import { AuthContext } from '../context/AuthContext';
 
-const LikePost = ({ postId }) => {
+const LikePost = ({ postId, initialIsLiked, initialLikesCount }) => {
     const { authenticated, handleLogout } = useContext(AuthContext);
-    const [isLiked, setIsLiked] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [likesCount, setLikesCount] = useState(0);
-    // eslint-disable-next-line
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchLikeData = async () => {
-            if (!authenticated) {
-                setIsLiked(false);
-                try {
-                    const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`);
-                    setLikesCount(likesCountResponse.data);
-                } catch (err) {
-                    console.error('Error fetching likes count:', err);
-                    setError('Error fetching likes count.');
-                }
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const likeStatusResponse = await apiClient.get(`/post/isLiked?postId=${postId}`);
-                setIsLiked(likeStatusResponse.data);
-
-                const likesCountResponse = await apiClient.get(`/post/getLikes?postId=${postId}`);
-                setLikesCount(likesCountResponse.data);
-                setLoading(false);
-            } catch (err) {
-                console.warn("Session expired. Logging out...");
-                handleLogout();
-            }
-        };
-
-        fetchLikeData();
-    }, [postId, authenticated, handleLogout]);
+    const [isLiked, setIsLiked] = useState(initialIsLiked);
+    const [likesCount, setLikesCount] = useState(initialLikesCount);
 
     const handleLikeToggle = async () => {
         if (!authenticated) {
@@ -50,13 +16,15 @@ const LikePost = ({ postId }) => {
 
         try {
             if (isLiked) {
-                await apiClient.post(`/post/unlike?postId=${postId}`, {});
                 setIsLiked(false);
                 setLikesCount(prevCount => prevCount - 1);
+                // Вызов API для анлайка
+                await apiClient.post(`/post/unlike?postId=${postId}`, {});
             } else {
-                await apiClient.post(`/post/like?postId=${postId}`, {});
                 setIsLiked(true);
                 setLikesCount(prevCount => prevCount + 1);
+                // Вызов API для лайка
+                await apiClient.post(`/post/like?postId=${postId}`, {});
             }
         } catch (err) {
             console.warn("Session has expired.");
@@ -64,17 +32,15 @@ const LikePost = ({ postId }) => {
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
-            <i
-                className={`bi ${isLiked ? 'bi-heart-fill liked' : 'bi-heart'}`}
-                onClick={handleLikeToggle}
-                style={{ cursor: authenticated ? 'pointer' : 'not-allowed', color: isLiked ? 'red' : 'black' }}
-                title={authenticated ? (isLiked ? 'Like' : 'Like') : 'Sign in to like it'}
-            > {likesCount}</i>
+        <i
+            className={`bi ${isLiked ? 'bi-heart-fill liked' : 'bi-heart'}`}
+            onClick={handleLikeToggle}
+            style={{ cursor: authenticated ? 'pointer' : 'not-allowed', color: isLiked ? 'red' : 'black' }}
+            title={authenticated ? (isLiked ? 'Unlike' : 'Like') : 'Sign in to like it'}
+        >
+            {' '}{likesCount}
+        </i>
     );
 };
 

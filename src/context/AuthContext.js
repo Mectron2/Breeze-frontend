@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    const [isAuthReady, setIsAuthReady] = useState(false);
 
     const handleLogout = () => {
         logout();
@@ -37,16 +38,16 @@ export const AuthProvider = ({ children }) => {
                 console.error("Error fetching current user:", error);
             }
         }
+        setIsAuthReady(true); // Готово
     };
-
 
     useEffect(() => {
         fetchCurrentUser();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authenticated, currentUser, handleLogout }}>
+        <AuthContext.Provider value={{authenticated, currentUser, handleLogout, isAuthReady}}>
             {children}
         </AuthContext.Provider>
     );
-};
+}

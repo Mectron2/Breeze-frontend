@@ -58,7 +58,7 @@ const PostsList = ({ posts, setPosts }) => {
                     </div>
                     <footer>
                         <div className="likesAndComments">
-                            <LikePost postId={post.id} />
+                            <LikePost postId={post.id} initialIsLiked={post.liked} initialLikesCount={post.likesCount} />
                             <CommentPost
                                 post={post}
                                 postId={post.id}

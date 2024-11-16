@@ -35,6 +35,9 @@ export const AuthProvider = ({ children }) => {
 
                 setCurrentUser(userData);
             } catch (error) {
+                if (error.status === 401) {
+                    handleLogout();
+                }
                 console.error("Error fetching current user:", error);
             }
         }

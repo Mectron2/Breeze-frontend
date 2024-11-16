@@ -6,7 +6,7 @@ import UserAvatar from "../components/UserAvatar";
 import { AuthContext } from '../context/AuthContext';
 
 const CommentPost = ({ post, postId, initialCommentsCount }) => {
-    const { authenticated } = useContext(AuthContext);
+    const { authenticated, currentUser } = useContext(AuthContext);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -51,6 +51,19 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
         }
     };
 
+    const handleDeleteComment = async (commentId) => {
+        const confirmed = window.confirm("Are you sure you want to delete this comment?");
+        if (!confirmed) return;
+
+        try {
+            await apiClient.delete(`/post/comments/${commentId}`);
+            setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+            setCommentsCount((prevCount) => prevCount - 1);
+        } catch (err) {
+            console.error('Error deleting comment:', err);
+        }
+    };
+
     const disableScroll = () => {
         const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
         document.body.style.overflow = 'hidden';
@@ -58,10 +71,8 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
     };
 
     const enableScroll = () => {
-        setTimeout(() => {
-            document.body.style.overflow = 'auto';
-            document.body.style.paddingRight = '0px';
-        }, 0);
+        document.body.style.overflow = 'auto';
+        document.body.style.paddingRight = '0px';
     };
 
     return (
@@ -107,12 +118,19 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
                                             {comments.map(comment => (
                                                 <li key={comment.id} className="comment-item">
                                                     <div className="comment-header">
-                                                        <img
-                                                            src={comment.user.profileImagePath}
-                                                            alt={`${comment.user.username}'s avatar`}
-                                                            className="comment-avatar"
-                                                        />
-                                                        <strong>{comment.user.username}</strong>
+                                                        <div className="comment-author">
+                                                            <img
+                                                                src={comment.user.profileImagePath}
+                                                                alt={`${comment.user.username}'s avatar`}
+                                                                className="comment-avatar"
+                                                            />
+                                                            <strong>{comment.user.username}</strong>
+                                                        </div>
+                                                        {authenticated && (comment.user.id === currentUser.user.id || currentUser.authorities.some(auth => auth.authority === "ROLE_ADMIN")) && (
+                                                            <i className="bi bi-trash comment-delete-icon"
+                                                               onClick={() => handleDeleteComment(comment.id)}>
+                                                            </i>
+                                                        )}
                                                     </div>
                                                     <p>{comment.content}</p>
                                                 </li>

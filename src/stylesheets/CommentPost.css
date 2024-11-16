@@ -64,3 +64,9 @@
 .bi-chat-left-text {
     color: #f4f5f7 !important;
 }
+
+.comment-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

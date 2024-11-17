@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef} from 'react';
 import apiClient from '../util/apiClient';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -11,10 +11,9 @@ const AddPost = () => {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [imageFile, setImageFile] = useState(null);
-    // eslint-disable-next-line
-    const [contentType, setContentType] = useState('TEXT');
     const [content, setContent] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
+    const fileInputRef = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,11 +56,20 @@ const AddPost = () => {
             if (response.status === 200 || response.status === 201) {
                 setResponseMessage('Post successfully added!');
                 console.log('Server response:', response.data);
+
                 setTitle('');
                 setImageFile(null);
                 setContent('');
-                setContentType('TEXT');
-                navigate(`/user/${currentUser.user.username}`)
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+
+                const currentPath = `/user/${currentUser.user.username}`;
+                if (window.location.pathname === currentPath) {
+                    window.location.reload();
+                } else {
+                    navigate(currentPath);
+                }
             } else {
                 setResponseMessage('Failed to add post.');
                 console.error('Error response:', response.statusText);
@@ -117,6 +125,7 @@ const AddPost = () => {
                                         id="imageFile"
                                         name="imageFile"
                                         accept="image/png, image/jpeg"
+                                        ref={fileInputRef}
                                         onChange={(e) => setImageFile(e.target.files[0])}
                                     />
                                 </div>

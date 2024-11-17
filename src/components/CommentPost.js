@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import apiClient from '../util/apiClient';
 import '../stylesheets/CommentPost.css';
@@ -8,47 +8,57 @@ import { AuthContext } from '../context/AuthContext';
 const CommentPost = ({ post, postId, initialCommentsCount }) => {
     const { authenticated, currentUser } = useContext(AuthContext);
     const [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [newComment, setNewComment] = useState('');
     const [showModal, setShowModal] = useState(false);
     const modalRef = useRef(null);
     const [commentsCount, setCommentsCount] = useState(initialCommentsCount || 0);
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            if (!postId) return;
+    const fetchComments = async () => {
+        if (!postId) return;
 
-            try {
-                setLoading(true);
-                const response = await apiClient.get(`/post/comments/${postId}`);
-                setComments(response.data);
-                setCommentsCount(response.data.length);
-                setLoading(false);
-            } catch (err) {
-                setError('Error loading comments');
-                setLoading(false);
-            }
-        };
-
-        fetchComments();
-    }, [postId]);
+        try {
+            setLoading(true);
+            const response = await apiClient.get(`/post/comments/${postId}`);
+            setComments(response.data);
+            setCommentsCount(response.data.length);
+            setLoading(false);
+        } catch (err) {
+            setError('Error loading comments');
+            setLoading(false);
+        }
+    };
 
     const handleAddComment = async () => {
         if (newComment.trim() === '') return;
 
         try {
-            await apiClient.post(`/post/comments`, {
+            const response = await apiClient.post(`/post/comments`, {
                 postId: postId,
                 content: newComment
             });
+
+            const newCommentData = {
+                ...response.data,
+                user: {
+                    id: response.data.user.id,
+                    username: response.data.user.username,
+                    profileImagePath: response.data.user.profileImagePath
+                }
+            };
+
             setNewComment('');
-            const updatedComments = await apiClient.get(`/post/comments/${postId}`);
-            setComments(updatedComments.data);
-            setCommentsCount(updatedComments.data.length);
+            setComments((prevComments) => [...prevComments, newCommentData]);
+            setCommentsCount((prevCount) => prevCount + 1);
         } catch (err) {
             console.error('Error adding comment:', err);
         }
+    };
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+        fetchComments(); // Загружаем комментарии при открытии модального окна
     };
 
     const handleDeleteComment = async (commentId) => {
@@ -77,7 +87,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
 
     return (
         <>
-            <i className="bi bi-chat-left-text" onClick={() => setShowModal(true)}> {commentsCount} </i>
+            <i className="bi bi-chat-left-text" onClick={handleOpenModal}> {commentsCount} </i>
             <CSSTransition
                 in={showModal}
                 timeout={100}

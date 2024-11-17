@@ -10,8 +10,7 @@ const PostList = () => {
     const { authenticated, isAuthReady } = useContext(AuthContext);
 
     useEffect(() => {
-        if (!isAuthReady) return; // Ждём, пока контекст завершит проверку
-
+        if (!isAuthReady) return;
         const fetchPosts = async () => {
             setLoading(true);
             setError(null);
@@ -41,7 +40,7 @@ const PostList = () => {
         };
 
         fetchPosts();
-    }, [authenticated, isAuthReady]); // Добавляем isAuthReady в зависимости
+    }, [authenticated, isAuthReady]);
 
     if (!isAuthReady) {
         return <div>Loading authentication...</div>;

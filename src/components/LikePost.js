@@ -18,12 +18,10 @@ const LikePost = ({ postId, initialIsLiked, initialLikesCount }) => {
             if (isLiked) {
                 setIsLiked(false);
                 setLikesCount(prevCount => prevCount - 1);
-                // Вызов API для анлайка
                 await apiClient.post(`/post/unlike?postId=${postId}`, {});
             } else {
                 setIsLiked(true);
                 setLikesCount(prevCount => prevCount + 1);
-                // Вызов API для лайка
                 await apiClient.post(`/post/like?postId=${postId}`, {});
             }
         } catch (err) {

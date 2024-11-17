@@ -42,7 +42,7 @@ const SearchPost = () => {
     };
 
     useEffect(() => {
-        if (!isAuthReady) return; // Ждём завершения проверки аутентификации
+        if (!isAuthReady) return;
         fetchPosts();
     }, [authenticated, isAuthReady]);
 

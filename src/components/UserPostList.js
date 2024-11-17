@@ -12,7 +12,7 @@ const UserPostList = () => {
     const { authenticated, isAuthReady } = useContext(AuthContext);
 
     useEffect(() => {
-        if (!isAuthReady) return; // Ждём завершения проверки аутентификации
+        if (!isAuthReady) return;
 
         const fetchUserPosts = async () => {
             setLoading(true);

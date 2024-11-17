@@ -58,7 +58,7 @@ const CommentPost = ({ post, postId, initialCommentsCount }) => {
 
     const handleOpenModal = () => {
         setShowModal(true);
-        fetchComments(); // Загружаем комментарии при открытии модального окна
+        fetchComments();
     };
 
     const handleDeleteComment = async (commentId) => {
